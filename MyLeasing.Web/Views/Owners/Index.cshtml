@@ -30,6 +30,9 @@
              <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -56,6 +59,9 @@
                     {
                         <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:105px; height:100px;max-width:100%;max-height:auto" />
                     }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>

@@ -5,6 +5,6 @@ namespace MyLeasing.Web.Data
 {
     public interface IOwnerRepository : IGenericRepository<Owner>
     {
-
+        IQueryable<Owner> GetOwnersWithUsers();
     }
 }

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using MyLeasing.Web.Data.Entities;
+using MyLeasing.Web.Helpers;
 
 namespace MyLeasing.Web.Data
 {
     public class SeedDb
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
         private Random _random;
 
-        public SeedDb(DataContext context)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
             _random = new Random();
         }
 
@@ -20,32 +24,45 @@ namespace MyLeasing.Web.Data
         {
             await _context.Database.EnsureCreatedAsync();
 
-            if (!_context.Owners.Any())
+            int index = 0;
+            var user = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
+            if (user == null && !_context.Owners.Any())
             {
-                AddOwner("André", "Fernandes", "Rua do Vale Formoso de Cima");
-                AddOwner("José", "Carlos", "Rua do Alecrim");
-                AddOwner("Diogo", "Monteiro", "Rua da liberdade");
-                AddOwner("Ricardo", "Lopes", "Rua de vila de baixo 112");
-                AddOwner("Pedro", "Guerreiro", "Avenidade 25 de Abril");
-                AddOwner("Hugo", "Reis", "Rua de Angola");
-                AddOwner("Fernando", "Pessoa", "Estrada do Azeite 12");
-                AddOwner("Cristina", "Mendes", "Avenidade de Coimbra");
-                AddOwner("Filipe", "Ferreira", "Rua do montijo 13");
-                AddOwner("Fernanda", "Correia", "Rua de cima 34");
-                await _context.SaveChangesAsync();
+                for (int i = 0; i < 10; i++)
+                {
+                    user = new User
+                    {
+                        UserName = "a" + index + "@gmail.com",
+                        Document = _random.Next(10000, 99999),
+                        FirstName = "A" + index,
+                        LastName = "F" + index,
+                        Email = "a" + index + "@gmail.com",
+                        Address = "Rua " + index
+                    };
+
+                    var result = await _userHelper.AddUserAsync(user, "123456");
+                    if (result != IdentityResult.Success)
+                    {
+                        throw new InvalidOperationException("Could not create the user in seeder");
+                    }
+                    AddOwner(user);
+                    index++;
+                    await _context.SaveChangesAsync();
+                }
             }
         }
 
-        private void AddOwner(string firstName, string lastName, string address)
+        private void AddOwner(User user)
         {
             _context.Owners.Add(new Owner
             {
-                Document = _random.Next(10000, 99999),
-                FirstName = firstName,
-                LastName = lastName,
+                Document = Convert.ToInt32(user.Document),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 FixedPhone = Convert.ToString(_random.Next(210000000, 219999999)),
                 CellPhone = Convert.ToString(_random.Next(930000000, 939999999)),
-                Address = address
+                Address = user.Address,
+                User = user
             });
         }
     }

@@ -31,5 +31,7 @@ namespace MyLeasing.Web.Data.Entities
 
         [Display(Name = "Owner Name")]
         public string OwnerName => $"{FirstName} {LastName}";
+
+        public User User { get; set; }
     }
 }
