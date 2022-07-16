@@ -55,10 +55,10 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
-                    {
-                        <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:105px; height:100px;max-width:100%;max-height:auto" />
-                    }
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:105px; height:100px;max-width:100%;max-height:auto" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserName)

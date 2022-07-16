@@ -43,6 +43,8 @@ namespace MyLeasing.Web
 
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
 
             services.AddControllersWithViews();
