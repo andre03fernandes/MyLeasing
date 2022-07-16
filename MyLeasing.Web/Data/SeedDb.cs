@@ -26,7 +26,7 @@ namespace MyLeasing.Web.Data
 
             int index = 0;
             var user = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
-            if (user == null && !_context.Owners.Any())
+            if (user == null && !_context.Owners.Any() || !_context.Lessees.Any())
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -49,12 +49,47 @@ namespace MyLeasing.Web.Data
                     index++;
                     await _context.SaveChangesAsync();
                 }
+                for (int i = 0; i < 5; i++)
+                {
+                    user = new User
+                    {
+                        UserName = "a" + index + "@gmail.com",
+                        Document = _random.Next(10000, 99999),
+                        FirstName = "A" + index,
+                        LastName = "F" + index,
+                        Email = "a" + index + "@gmail.com",
+                        Address = "Rua " + index
+                    };
+
+                    var result = await _userHelper.AddUserAsync(user, "123456");
+                    if (result != IdentityResult.Success)
+                    {
+                        throw new InvalidOperationException("Could not create the user in seeder");
+                    }
+                    AddLessee(user);
+                    index++;
+                    await _context.SaveChangesAsync();
+                }
             }
         }
 
         private void AddOwner(User user)
         {
             _context.Owners.Add(new Owner
+            {
+                Document = Convert.ToInt32(user.Document),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                FixedPhone = Convert.ToString(_random.Next(210000000, 219999999)),
+                CellPhone = Convert.ToString(_random.Next(930000000, 939999999)),
+                Address = user.Address,
+                User = user
+            });
+        }
+
+        private void AddLessee(User user)
+        {
+            _context.Lessees.Add(new Lessee
             {
                 Document = Convert.ToInt32(user.Document),
                 FirstName = user.FirstName,
