@@ -1,11 +1,12 @@
 ﻿using MyLeasing.Web.Data.Entities;
 using MyLeasing.Web.Models;
+using System;
 
 namespace MyLeasing.Web.Helpers
 {
     public class ConverterHelper : IConverterHelper
     {
-        public Owner ToOwner(OwnerViewModel model, string path, bool isNew)
+        public Owner ToOwner(OwnerViewModel model, Guid imageId, bool isNew)
         {
             return new Owner
             {
@@ -16,7 +17,7 @@ namespace MyLeasing.Web.Helpers
                 FixedPhone = model.FixedPhone,
                 CellPhone = model.CellPhone,
                 Address = model.Address,
-                ImageUrl = path,
+                ImageId = imageId,
                 User = model.User
             };
         }
@@ -32,12 +33,12 @@ namespace MyLeasing.Web.Helpers
                 FixedPhone = owner.FixedPhone,
                 CellPhone = owner.CellPhone,
                 Address = owner.Address,
-                ImageUrl = owner.ImageUrl,
+                ImageId = owner.ImageId,
                 User = owner.User
             };
         }
 
-        public Lessee ToLessee(LesseeViewModel model, string path, bool isNew)
+        public Lessee ToLessee(LesseeViewModel model, Guid imageId, bool isNew)
         {
             return new Lessee
             {
@@ -48,7 +49,7 @@ namespace MyLeasing.Web.Helpers
                 FixedPhone = model.FixedPhone,
                 CellPhone = model.CellPhone,
                 Address = model.Address,
-                ImageUrl = path,
+                ImageId = imageId,
                 User = model.User
             };
         }
@@ -64,7 +65,7 @@ namespace MyLeasing.Web.Helpers
                 FixedPhone = lessee.FixedPhone,
                 CellPhone = lessee.CellPhone,
                 Address = lessee.Address,
-                ImageUrl = lessee.ImageUrl,
+                ImageId = lessee.ImageId,
                 User = lessee.User
             };
         }

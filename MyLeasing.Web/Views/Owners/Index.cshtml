@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th>
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.Address)
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                @Html.DisplayNameFor(model => model.ImageFullPath)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                @if (!string.IsNullOrEmpty(item.ImageFullPath))
                 {
-                    <img src="@Url.Content(item.ImageUrl)" alt="Image" style="width:105px; height:100px;max-width:100%;max-height:auto" />
+                    <img src="@Url.Content(item.ImageFullPath)" alt="Image" style="width:105px; height:100px;max-width:100%;max-height:auto" />
                 }
             </td>
             <td>

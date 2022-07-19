@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyLeasing.Web.Data;
-using MyLeasing.Web.Data.Entities;
 using MyLeasing.Web.Helpers;
 using MyLeasing.Web.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace MyLeasing.Web.Controllers
@@ -12,15 +12,15 @@ namespace MyLeasing.Web.Controllers
     {
         private readonly IOwnerRepository _ownerRepository;
         private readonly IUserHelper _userHelper;
-        private readonly IImageHelper _imageHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly IBlobHelper _blobHelper;
 
-        public OwnersController(IOwnerRepository ownerRepository, IUserHelper userHelper, IImageHelper imageHelper, IConverterHelper converterHelper)
+        public OwnersController(IOwnerRepository ownerRepository, IUserHelper userHelper, IConverterHelper converterHelper, IBlobHelper blobHelper)
         {
             _ownerRepository = ownerRepository;
             _userHelper = userHelper;
-            _imageHelper = imageHelper;
             _converterHelper = converterHelper;
+            _blobHelper = blobHelper;
         }
 
         // GET: Owners
@@ -61,14 +61,14 @@ namespace MyLeasing.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var path = string.Empty;
+                Guid imageId = Guid.Empty;
 
                 if (model.ImageFile != null && model.ImageFile.Length > 0)
                 {
-                    path = await _imageHelper.UpLoadImageAsync(model.ImageFile, "owners");
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "owners");
                 }
 
-                var owner = _converterHelper.ToOwner(model, path, true);
+                var owner = _converterHelper.ToOwner(model, imageId, true);
 
                 //TODO: Modificar para o user que tiver logado 
                 owner.User = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
@@ -106,14 +106,14 @@ namespace MyLeasing.Web.Controllers
             {
                 try
                 {
-                    var path = model.ImageUrl;
+                    Guid imageId = Guid.Empty;
 
                     if (model.ImageFile != null && model.ImageFile.Length > 0)
                     {
-                       path = await _imageHelper.UpLoadImageAsync(model.ImageFile, "owners");
+                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "owners");
                     }
 
-                    var owner = _converterHelper.ToOwner(model, path, false);
+                    var owner = _converterHelper.ToOwner(model, imageId, false);
 
                     //TODO: Modificar para o user que tiver logado 
                     owner.User = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyLeasing.Web.Data.Entities
 {
@@ -27,7 +28,7 @@ namespace MyLeasing.Web.Data.Entities
         public string Address { get; set; }
 
         [Display(Name = "Photo")]
-        public string ImageUrl { get; set; }
+        public Guid ImageId { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName => $"{FirstName} {LastName}";
@@ -36,16 +37,9 @@ namespace MyLeasing.Web.Data.Entities
 
         public User User { get; set; }
 
-        public string ImageFullPath
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(ImageUrl))
-                {
-                    return null;
-                }
-                return $"https://localhost:44371{ImageUrl.Substring(1)}";
-            }
-        }
+        [Display(Name = "Photo")]
+        public string ImageFullPath => ImageId == Guid.Empty
+       ? $"https://myleasingandre.azurewebsites.net/images/noimage.png"
+       : $"https://myleasingandre.blob.core.windows.net/lessees/{ImageId}";
     }
 }
