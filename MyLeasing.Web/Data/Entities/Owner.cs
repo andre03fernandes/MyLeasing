@@ -37,7 +37,7 @@ namespace MyLeasing.Web.Data.Entities
 
         [Display(Name = "Photo")]
         public string ImageFullPath => ImageId == Guid.Empty
-       ? $"https://myleasingandre.azurewebsites.net/images/noimage.png"
+       ? $"https://myleasingandre.blob.core.windows.net/noimage/noimage.png"
        : $"https://myleasingandre.blob.core.windows.net/owners/{ImageId}";
     }
 }
