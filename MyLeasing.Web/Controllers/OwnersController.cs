@@ -71,9 +71,8 @@ namespace MyLeasing.Web.Controllers
                 }
 
                 var owner = _converterHelper.ToOwner(model, imageId, true);
-
-                //TODO: Modificar para o user que tiver logado 
-                owner.User = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
+ 
+                owner.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await _ownerRepository.CreateAsync(owner);
                 return RedirectToAction(nameof(Index));
             }
@@ -118,8 +117,7 @@ namespace MyLeasing.Web.Controllers
 
                     var owner = _converterHelper.ToOwner(model, imageId, false);
 
-                    //TODO: Modificar para o user que tiver logado 
-                    owner.User = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
+                    owner.User = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                     await _ownerRepository.UpdateAsync(owner);
                 }
                 catch (DbUpdateConcurrencyException)
