@@ -24,6 +24,10 @@ namespace MyLeasing.Web.Data
         {
             await _context.Database.EnsureCreatedAsync();
 
+            await _userHelper.CheckRoleAsync("Admin");
+            await _userHelper.CheckRoleAsync("Owner");
+            await _userHelper.CheckRoleAsync("Lessee");
+
             int index = 0;
             var user = await _userHelper.GetUserByEmailAsync("andre2411fernandes@gmail.com");
             if (user == null && !_context.Owners.Any() || !_context.Lessees.Any())
@@ -45,6 +49,15 @@ namespace MyLeasing.Web.Data
                     {
                         throw new InvalidOperationException("Could not create the user in seeder");
                     }
+
+                    await _userHelper.AddUserToRoleAsync(user, "Admin");
+
+                    var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
+                    if (!isInRole)
+                    {
+                        await _userHelper.AddUserToRoleAsync(user, "Admin");
+                    }
+
                     AddOwner(user);
                     index++;
                     await _context.SaveChangesAsync();
@@ -66,6 +79,15 @@ namespace MyLeasing.Web.Data
                     {
                         throw new InvalidOperationException("Could not create the user in seeder");
                     }
+
+                    await _userHelper.AddUserToRoleAsync(user, "Admin");
+
+                    var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
+                    if (!isInRole)
+                    {
+                        await _userHelper.AddUserToRoleAsync(user, "Admin");
+                    }
+
                     AddLessee(user);
                     index++;
                     await _context.SaveChangesAsync();
