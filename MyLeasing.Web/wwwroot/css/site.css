@@ -2,70 +2,237 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+/* Forbidden page
+-------------------------------------------------- */
+
+
+.whistle {
+    width: 20%;
+    fill: #f95959;
+    margin: 100px 40%;
+    text-align: left;
+    transform: translate(-50%, -50%);
+    transform: rotate(0);
+    transform-origin: 80% 30%;
+    animation: wiggle .2s infinite;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: rotate(3deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(3deg);
+    }
+}
+
+.h1-forbidden {
+    margin-top: -100px;
+    margin-bottom: 20px;
+    color: #facf5a;
+    text-align: center;
+    font-family: 'Raleway';
+    font-size: 90px;
+    font-weight: 800;
+}
+
+.h2-forbidden {
+    color: #455d7a;
+    text-align: center;
+    font-family: 'Raleway';
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+/* Page not found
+-------------------------------------------------- */
+
+.fundo {
+    animation: scales 3s alternate infinite;
+    transform-origin: center;
+}
+
+.pao-baixo {
+    animation: rotatepao 14s cubic-bezier(.1,.49,.41,.97) infinite;
+    transform-origin: center;
+}
+
+.pao-cima {
+    animation: rotatepao 7s 1s cubic-bezier(.1,.49,.41,.97) infinite;
+    transform-origin: center;
+}
+
+.olhos {
+    animation: olhos 2s alternate infinite;
+    transform-origin: center;
+}
+
+.left-sparks {
+    animation: left-sparks 4s alternate infinite;
+    transform-origin: 150px 156px;
+}
+
+.right-sparks {
+    animation: left-sparks 4s alternate infinite;
+    transform-origin: 310px 150px;
+}
+
+.olhos {
+    animation: olhos 2s alternate infinite;
+    transform-origin: center;
+}
+
+@keyframes scales {
+    from {
+        transform: scale(0.98)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+@keyframes rotatepao {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50%, 60% {
+        transform: rotate(-20deg)
+    }
+
+    100% {
+        transform: rotate(0deg)
+    }
+}
+
+@keyframes olhos {
+    0% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(30deg);
+    }
+}
+
+@keyframes left-sparks {
+    0% {
+        opacity: 0;
+    }
+}
+
+
+.main {
+    min-height: 600px;
+    margin: 0px auto;
+    width: auto;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: dash 4s alternate infinite;
+}
+
+@keyframes dash {
+    0%, 30% {
+        fill: #4B4B62;
+        stroke-dashoffset: 0;
+    }
+
+    80%,100% {
+        fill: transparent;
+        stroke-dashoffset: -200;
+    }
+}
+
+.prg {
+    min-height: 600px;
+    margin: 0px auto;
+    width: auto;
+    max-width: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

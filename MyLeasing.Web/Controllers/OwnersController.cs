@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyLeasing.Web.Data;
 using MyLeasing.Web.Helpers;
 using MyLeasing.Web.Models;
+using SuperShop.Helpers;
 using System;
 using System.Threading.Tasks;
 
@@ -36,13 +37,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerRepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             return View(owner);
@@ -86,13 +87,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerRepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
             var model = _converterHelper.ToOwnerViewModel(owner);
             return View(model);
@@ -143,13 +144,13 @@ namespace MyLeasing.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             var owner = await _ownerRepository.GetByIdAsync(id.Value);
             if (owner == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("OwnerNotFound");
             }
 
             return View(owner);
@@ -163,6 +164,11 @@ namespace MyLeasing.Web.Controllers
             var owner = await _ownerRepository.GetByIdAsync(id);
             await _ownerRepository.DeleteAsync(owner);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult OwnerNotFound()
+        {
+            return View();
         }
     }
 }
