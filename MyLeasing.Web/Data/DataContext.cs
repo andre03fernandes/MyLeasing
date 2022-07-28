@@ -10,6 +10,8 @@ namespace MyLeasing.Web.Data
 
         public DbSet<Lessee> Lessees { get; set; }
 
+        public DbSet<Admin> Admins { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
     }
 }

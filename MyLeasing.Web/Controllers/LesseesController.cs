@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyLeasing.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Lessee")]
     public class LesseesController : Controller
     {
         private readonly ILesseeRepository _lesseeRepository;
@@ -48,7 +49,6 @@ namespace MyLeasing.Web.Controllers
         }
 
         // GET: Lessees/Create
-
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {

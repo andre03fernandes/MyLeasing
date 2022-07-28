@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyLeasing.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Owner")]
     public class OwnersController : Controller
     {
         private readonly IOwnerRepository _ownerRepository;
